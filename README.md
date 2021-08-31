@@ -7,3 +7,8 @@ Team Members + Current Roles:
 - Josh
 - Michael
 - Tom
+
+#Required ROS packages to work on this project
+-ROS Noetic install:
+-moveit:
+    Install on Ubuntu 20.04: 'sudo apt install ros-noetic-moveit'
