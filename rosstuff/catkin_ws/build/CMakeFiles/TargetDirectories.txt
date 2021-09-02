@@ -35,3 +35,11 @@
 /home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/gtest/googletest/CMakeFiles/test.dir
 /home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/gtest/googletest/CMakeFiles/gtest_main.dir
 /home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/gtest/googletest/CMakeFiles/gtest.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/robot_simulation/CMakeFiles/install/strip.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/robot_simulation/CMakeFiles/install/local.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/robot_simulation/CMakeFiles/install.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/robot_simulation/CMakeFiles/list_install_components.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/robot_simulation/CMakeFiles/rebuild_cache.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/robot_simulation/CMakeFiles/edit_cache.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/robot_simulation/CMakeFiles/test.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir

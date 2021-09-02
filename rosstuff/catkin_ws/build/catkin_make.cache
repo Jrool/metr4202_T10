@@ -1,2 +1,2 @@
-
+robot_simulation
 -DCATKIN_DEVEL_PREFIX=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/install -G Unix Makefiles
