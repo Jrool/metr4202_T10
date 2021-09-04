@@ -5,14 +5,10 @@
 <xacro:include filename="$(find arm_1v2_description)/urdf/arm_1v2.trans" />
 <xacro:include filename="$(find arm_1v2_description)/urdf/arm_1v2.gazebo" />
 
-<link name="dummy">
+<link name="world">
 </link>
+
 <link name="base_link">
-  <inertial>
-    <origin rpy="0 0 0" xyz="0.039996602784261225 0.040054601126102964 0.004961008287480484"/>
-    <mass value="10.00"/>
-    <inertia ixx="0.000" ixy="-0.0" ixz="0.0" iyy="0.000" iyz="-0.0" izz="0.000"/>
-  </inertial>
   <visual>
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <geometry>
@@ -175,10 +171,11 @@
   </collision>
 </link>
 
-<joint name="dummy_joint" type="fixed">
-    <parent link="dummy"/>
+<joint name="ground" type="fixed">
+    <parent link="world"/>
     <child link="base_link"/>
 </joint>
+
 <joint name="Rigid1" type="fixed">
   <origin rpy="0 0 0" xyz="0.047 0.0211 0.007"/>
   <parent link="base_link"/>
