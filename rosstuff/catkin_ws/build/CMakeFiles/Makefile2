@@ -54,13 +54,17 @@ CMAKE_BINARY_DIR = /home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/bu
 
 # The main recursive "all" target.
 all: gtest/all
-all: robot_simulation/all
+all: arm_1_description/all
+all: arm_1v2_description/all
+all: arm_assembly_1_description/all
 
 .PHONY : all
 
 # The main recursive "preinstall" target.
 preinstall: gtest/preinstall
-preinstall: robot_simulation/preinstall
+preinstall: arm_1_description/preinstall
+preinstall: arm_1v2_description/preinstall
+preinstall: arm_assembly_1_description/preinstall
 
 .PHONY : preinstall
 
@@ -71,9 +75,65 @@ clean: CMakeFiles/clean_test_results.dir/clean
 clean: CMakeFiles/tests.dir/clean
 clean: CMakeFiles/download_extra_data.dir/clean
 clean: gtest/clean
-clean: robot_simulation/clean
+clean: arm_1_description/clean
+clean: arm_1v2_description/clean
+clean: arm_assembly_1_description/clean
 
 .PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory arm_1_description
+
+# Recursive "all" directory target.
+arm_1_description/all:
+
+.PHONY : arm_1_description/all
+
+# Recursive "preinstall" directory target.
+arm_1_description/preinstall:
+
+.PHONY : arm_1_description/preinstall
+
+# Recursive "clean" directory target.
+arm_1_description/clean: arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/clean
+
+.PHONY : arm_1_description/clean
+
+#=============================================================================
+# Directory level rules for directory arm_1v2_description
+
+# Recursive "all" directory target.
+arm_1v2_description/all:
+
+.PHONY : arm_1v2_description/all
+
+# Recursive "preinstall" directory target.
+arm_1v2_description/preinstall:
+
+.PHONY : arm_1v2_description/preinstall
+
+# Recursive "clean" directory target.
+arm_1v2_description/clean:
+
+.PHONY : arm_1v2_description/clean
+
+#=============================================================================
+# Directory level rules for directory arm_assembly_1_description
+
+# Recursive "all" directory target.
+arm_assembly_1_description/all:
+
+.PHONY : arm_assembly_1_description/all
+
+# Recursive "preinstall" directory target.
+arm_assembly_1_description/preinstall:
+
+.PHONY : arm_assembly_1_description/preinstall
+
+# Recursive "clean" directory target.
+arm_assembly_1_description/clean:
+
+.PHONY : arm_assembly_1_description/clean
 
 #=============================================================================
 # Directory level rules for directory gtest
@@ -131,24 +191,6 @@ gtest/googletest/clean: gtest/googletest/CMakeFiles/gtest_main.dir/clean
 gtest/googletest/clean: gtest/googletest/CMakeFiles/gtest.dir/clean
 
 .PHONY : gtest/googletest/clean
-
-#=============================================================================
-# Directory level rules for directory robot_simulation
-
-# Recursive "all" directory target.
-robot_simulation/all:
-
-.PHONY : robot_simulation/all
-
-# Recursive "preinstall" directory target.
-robot_simulation/preinstall:
-
-.PHONY : robot_simulation/preinstall
-
-# Recursive "clean" directory target.
-robot_simulation/clean: robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/clean
-
-.PHONY : robot_simulation/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/doxygen.dir
@@ -395,31 +437,31 @@ gtest/googletest/CMakeFiles/gtest.dir/clean:
 .PHONY : gtest/googletest/CMakeFiles/gtest.dir/clean
 
 #=============================================================================
-# Target rules for target robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir
+# Target rules for target arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir
 
 # All Build rule for target.
-robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/all:
-	$(MAKE) -f robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/build.make robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/depend
-	$(MAKE) -f robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/build.make robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/build
+arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/all:
+	$(MAKE) -f arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/build.make arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/depend
+	$(MAKE) -f arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/build.make arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/CMakeFiles --progress-num= "Built target _catkin_empty_exported_target"
-.PHONY : robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/all
+.PHONY : arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/all
 
 # Build rule for subdir invocation for target.
-robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/rule: cmake_check_build_system
+arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/CMakeFiles 0
-.PHONY : robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/rule
+.PHONY : arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/rule
 
 # Convenience name for target.
-_catkin_empty_exported_target: robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/rule
+_catkin_empty_exported_target: arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/rule
 
 .PHONY : _catkin_empty_exported_target
 
 # clean rule for target.
-robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/clean:
-	$(MAKE) -f robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/build.make robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/clean
-.PHONY : robot_simulation/CMakeFiles/_catkin_empty_exported_target.dir/clean
+arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/clean:
+	$(MAKE) -f arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/build.make arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/clean
+.PHONY : arm_1_description/CMakeFiles/_catkin_empty_exported_target.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

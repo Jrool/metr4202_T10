@@ -380,10 +380,22 @@ _gtest_INCLUDES:FILEPATH=/usr/include/gtest/gtest.h
 _gtest_SOURCES:FILEPATH=/usr/src/gtest/src/gtest.cc
 
 //Value Computed by CMake
-arm_assembly_1_description_BINARY_DIR:STATIC=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/robot_simulation
+arm_1_description_BINARY_DIR:STATIC=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/arm_1_description
 
 //Value Computed by CMake
-arm_assembly_1_description_SOURCE_DIR:STATIC=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/src/robot_simulation
+arm_1_description_SOURCE_DIR:STATIC=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/src/arm_1_description
+
+//Value Computed by CMake
+arm_1v2_description_BINARY_DIR:STATIC=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/arm_1v2_description
+
+//Value Computed by CMake
+arm_1v2_description_SOURCE_DIR:STATIC=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/src/arm_1v2_description
+
+//Value Computed by CMake
+arm_assembly_1_description_BINARY_DIR:STATIC=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/arm_assembly_1_description
+
+//Value Computed by CMake
+arm_assembly_1_description_SOURCE_DIR:STATIC=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/src/arm_assembly_1_description
 
 //The directory containing a CMake configuration file for catkin.
 catkin_DIR:PATH=/opt/ros/noetic/share/catkin/cmake
@@ -585,7 +597,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=7
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

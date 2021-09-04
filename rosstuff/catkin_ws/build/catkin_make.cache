@@ -1,2 +1,2 @@
-robot_simulation
+arm_1_description:arm_1v2_description:arm_assembly_1_description
 -DCATKIN_DEVEL_PREFIX=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/install -G Unix Makefiles

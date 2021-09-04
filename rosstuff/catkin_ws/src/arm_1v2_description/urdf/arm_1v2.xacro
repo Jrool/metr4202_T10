@@ -216,5 +216,4 @@
   <parent link="Component4_1"/>
   <child link="Component5_1"/>
 </joint>
-
 </robot>

@@ -151,7 +151,7 @@
   </collision>
 </link>
 
-<link name="Component5_1">
+<link name="Component7_1">
   <inertial>
     <origin rpy="0 0 0" xyz="-0.004911427636345212 -0.091738362229175 -0.013498274708437327"/>
     <mass value="0.04968708903134089"/>
@@ -160,14 +160,14 @@
   <visual>
     <origin rpy="0 0 0" xyz="-0.024 -0.215 -0.0795"/>
     <geometry>
-      <mesh filename="package://arm_assembly_1_description/meshes/Component5_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://arm_assembly_1_description/meshes/Component7_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin rpy="0 0 0" xyz="-0.024 -0.215 -0.0795"/>
     <geometry>
-      <mesh filename="package://arm_assembly_1_description/meshes/Component5_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://arm_assembly_1_description/meshes/Component7_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -193,7 +193,7 @@
   </collision>
 </link>
 
-<link name="Component7_1">
+<link name="Component9_1">
   <inertial>
     <origin rpy="0 0 0" xyz="8.857236357759368e-05 0.06676163777082475 1.7252915624349496e-06"/>
     <mass value="0.04968708903134089"/>
@@ -202,59 +202,18 @@
   <visual>
     <origin rpy="0 0 0" xyz="-0.019 -0.2215 -0.066"/>
     <geometry>
-      <mesh filename="package://arm_assembly_1_description/meshes/Component7_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://arm_assembly_1_description/meshes/Component9_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin rpy="0 0 0" xyz="-0.019 -0.2215 -0.066"/>
     <geometry>
-      <mesh filename="package://arm_assembly_1_description/meshes/Component7_1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
-
-<link name="Component9_1">
-  <inertial>
-    <origin rpy="0 0 0" xyz="0.014941431109180572 -0.006262306013299024 -0.013531090545160884"/>
-    <mass value="0.042440875020205084"/>
-    <inertia ixx="1e-05" ixy="0.0" ixz="-0.0" iyy="7e-06" iyz="-0.0" izz="1.2e-05"/>
-  </inertial>
-  <visual>
-    <origin rpy="0 0 0" xyz="-0.024 -0.38 -0.0795"/>
-    <geometry>
-      <mesh filename="package://arm_assembly_1_description/meshes/Component9_1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin rpy="0 0 0" xyz="-0.024 -0.38 -0.0795"/>
-    <geometry>
       <mesh filename="package://arm_assembly_1_description/meshes/Component9_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
 
-<link name="Component9_1">
-  <inertial>
-    <origin rpy="0 0 0" xyz="-0.01705856889081943 0.0017376939867009833 -0.013531090545160884"/>
-    <mass value="0.042440875020205084"/>
-    <inertia ixx="1e-05" ixy="0.0" ixz="-0.0" iyy="7e-06" iyz="-0.0" izz="1.2e-05"/>
-  </inertial>
-  <visual>
-    <origin rpy="0 0 0" xyz="-0.056 -0.372 -0.0795"/>
-    <geometry>
-      <mesh filename="package://arm_assembly_1_description/meshes/Component9_1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin rpy="0 0 0" xyz="-0.056 -0.372 -0.0795"/>
-    <geometry>
-      <mesh filename="package://arm_assembly_1_description/meshes/Component9_1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
 
 <joint name="Rigid24" type="fixed">
   <origin rpy="0 0 0" xyz="0.047 0.0211 0.007"/>
@@ -298,7 +257,7 @@
 <joint name="Rigid31" type="fixed">
   <origin rpy="0 0 0" xyz="-0.032 0.0295 0.0055"/>
   <parent link="Component6_1"/>
-  <child link="Component5_1"/>
+  <child link="Component7_1"/>
 </joint>
 
 <joint name="Rev32" type="continuous">
