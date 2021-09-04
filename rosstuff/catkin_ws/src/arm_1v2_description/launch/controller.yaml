@@ -8,12 +8,12 @@ arm_1v2:
   Rev1_position_controller:
     type: effort_controllers/JointPositionController
     joint: Rev1
-    pid: {p: 100.0, i: 0.01, d: 10.0}
+    pid: {p: 10.0, i: 0.0, d: 0.0}
   Rev3_position_controller:
     type: effort_controllers/JointPositionController
     joint: Rev3
-    pid: {p: 100.0, i: 0.01, d: 10.0}
+    pid: {p: 10.0, i: 0.0, d: 0.0}
   Rev4_position_controller:
     type: effort_controllers/JointPositionController
     joint: Rev4
-    pid: {p: 100.0, i: 0.01, d: 10.0}
+    pid: {p: 10.0, i: 0.0, d: 0.0}
