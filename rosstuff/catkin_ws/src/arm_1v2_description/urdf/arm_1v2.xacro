@@ -216,4 +216,10 @@
   <parent link="Component4_1"/>
   <child link="Component5_1"/>
 </joint>
+
+<gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>/arm_1v2</robotNamespace>
+    </plugin>
+</gazebo>
 </robot>
