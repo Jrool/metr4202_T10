@@ -25,42 +25,21 @@
   </collision>
 </link>
 
-<link name="Component1_1">
-  <inertial>
-    <origin rpy="0 0 0" xyz="-3.1092385664038824e-05 -0.012761856959492827 0.019158190511464605"/>
-    <mass value="0.04244091097100989"/>
-    <inertia ixx="1.2e-05" ixy="-0.0" ixz="0.0" iyy="7e-06" iyz="-0.0" izz="1e-05"/>
-  </inertial>
-  <visual>
-    <origin rpy="0 0 0" xyz="0.1 0.056523 -0.057914"/>
-    <geometry>
-      <mesh filename="package://stubby_description/meshes/Component1_1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin rpy="0 0 0" xyz="0.1 0.056523 -0.057914"/>
-    <geometry>
-      <mesh filename="package://stubby_description/meshes/Component1_1.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
-
 <link name="Component2_1">
   <inertial>
-    <origin rpy="0 0 0" xyz="-3.2040751634446196e-05 4.2101146929818256e-07 0.002337181396785723"/>
+    <origin rpy="0 0 0" xyz="-3.204075163441844e-05 4.210114691594047e-07 0.0023371813967857508"/>
     <mass value="0.02417691266422109"/>
     <inertia ixx="1e-06" ixy="-0.0" ixz="-0.0" iyy="4e-06" iyz="-0.0" izz="5e-06"/>
   </inertial>
   <visual>
-    <origin rpy="0 0 0" xyz="0.1 0.056523 -0.097014"/>
+    <origin rpy="0 0 0" xyz="0.1 0.056523 -0.100914"/>
     <geometry>
       <mesh filename="package://stubby_description/meshes/Component2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin rpy="0 0 0" xyz="0.1 0.056523 -0.097014"/>
+    <origin rpy="0 0 0" xyz="0.1 0.056523 -0.100914"/>
     <geometry>
       <mesh filename="package://stubby_description/meshes/Component2_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -69,19 +48,19 @@
 
 <link name="Component3_1">
   <inertial>
-    <origin rpy="0 0 0" xyz="-0.014941417260610698 0.0017381430405059503 0.013530700157739883"/>
+    <origin rpy="0 0 0" xyz="-0.014941417260610684 0.0017381430405058046 0.013530700157739883"/>
     <mass value="0.04244091097100989"/>
     <inertia ixx="1e-05" ixy="-0.0" ixz="-0.0" iyy="7e-06" iyz="0.0" izz="1.2e-05"/>
   </inertial>
   <visual>
-    <origin rpy="0 0 0" xyz="0.084 0.056523 -0.102514"/>
+    <origin rpy="0 0 0" xyz="0.084 0.056523 -0.106414"/>
     <geometry>
       <mesh filename="package://stubby_description/meshes/Component3_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin rpy="0 0 0" xyz="0.084 0.056523 -0.102514"/>
+    <origin rpy="0 0 0" xyz="0.084 0.056523 -0.106414"/>
     <geometry>
       <mesh filename="package://stubby_description/meshes/Component3_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -90,19 +69,19 @@
 
 <link name="Component4_1">
   <inertial>
-    <origin rpy="0 0 0" xyz="0.0005044606380081723 0.05420147434824263 8.501678394848278e-06"/>
+    <origin rpy="0 0 0" xyz="0.0005044606380082001 0.05420147434824248 8.501678394889911e-06"/>
     <mass value="0.0869111581488203"/>
     <inertia ixx="0.000129" ixy="4e-06" ixz="0.0" iyy="7e-06" iyz="-0.0" izz="0.000122"/>
   </inertial>
   <visual>
-    <origin rpy="0 0 0" xyz="0.079 0.042023 -0.116014"/>
+    <origin rpy="0 0 0" xyz="0.079 0.042023 -0.119914"/>
     <geometry>
       <mesh filename="package://stubby_description/meshes/Component4_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin rpy="0 0 0" xyz="0.079 0.042023 -0.116014"/>
+    <origin rpy="0 0 0" xyz="0.079 0.042023 -0.119914"/>
     <geometry>
       <mesh filename="package://stubby_description/meshes/Component4_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -111,19 +90,19 @@
 
 <link name="Component5_1">
   <inertial>
-    <origin rpy="0 0 0" xyz="-0.014941417260610629 0.017738143040505805 -0.013469299842255589"/>
+    <origin rpy="0 0 0" xyz="-0.014941417260610629 0.017738143040505666 -0.013469299842255561"/>
     <mass value="0.04244091097100989"/>
     <inertia ixx="1e-05" ixy="-0.0" ixz="-0.0" iyy="7e-06" iyz="0.0" izz="1.2e-05"/>
   </inertial>
   <visual>
-    <origin rpy="0 0 0" xyz="0.084 -0.067477 -0.129514"/>
+    <origin rpy="0 0 0" xyz="0.084 -0.067477 -0.133414"/>
     <geometry>
       <mesh filename="package://stubby_description/meshes/Component5_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin rpy="0 0 0" xyz="0.084 -0.067477 -0.129514"/>
+    <origin rpy="0 0 0" xyz="0.084 -0.067477 -0.133414"/>
     <geometry>
       <mesh filename="package://stubby_description/meshes/Component5_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
@@ -132,54 +111,69 @@
 
 <link name="Component6_1">
   <inertial>
-    <origin rpy="0 0 0" xyz="0.0005044606380081446 0.05420147434824245 8.501678399372437e-06"/>
+    <origin rpy="0 0 0" xyz="0.0005044606380081584 0.05420147434824228 8.501678399400192e-06"/>
     <mass value="0.0869111581488203"/>
     <inertia ixx="0.000129" ixy="4e-06" ixz="0.0" iyy="7e-06" iyz="-0.0" izz="0.000122"/>
   </inertial>
   <visual>
-    <origin rpy="0 0 0" xyz="0.079 -0.097977 -0.116014"/>
+    <origin rpy="0 0 0" xyz="0.079 -0.097977 -0.119914"/>
     <geometry>
       <mesh filename="package://stubby_description/meshes/Component6_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
-    <origin rpy="0 0 0" xyz="0.079 -0.097977 -0.116014"/>
+    <origin rpy="0 0 0" xyz="0.079 -0.097977 -0.119914"/>
     <geometry>
       <mesh filename="package://stubby_description/meshes/Component6_1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
 
-<link name="base1_1">
+<link name="base1__1">
   <inertial>
-    <origin rpy="0 0 0" xyz="-3.397215732725556e-06 5.502213756899965e-05 0.00496061605955591"/>
-    <mass value="0.4968646843052766"/>
-    <inertia ixx="0.000271" ixy="-0.0" ixz="0.0" iyy="0.000272" iyz="-0.0" izz="0.000534"/>
+    <origin rpy="0 0 0" xyz="-2.606541757682601e-06 4.231417531211368e-05 0.006456869611114566"/>
+    <mass value="0.6475846843052765"/>
+    <inertia ixx="0.000356" ixy="-0.0" ixz="0.0" iyy="0.000357" iyz="-0.0" izz="0.000695"/>
   </inertial>
   <visual>
     <origin rpy="0 0 0" xyz="0.1 0.066523 -0.050914"/>
     <geometry>
-      <mesh filename="package://stubby_description/meshes/base1_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://stubby_description/meshes/base1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin rpy="0 0 0" xyz="0.1 0.066523 -0.050914"/>
     <geometry>
-      <mesh filename="package://stubby_description/meshes/base1_1.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="package://stubby_description/meshes/base1__1.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
 
-<joint name="Rigid1" type="fixed">
-  <origin rpy="0 0 0" xyz="0.0 0.01 0.007"/>
-  <parent link="base1_1"/>
-  <child link="Component1_1"/>
-</joint>
+<link name="Component1_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.007031092385664031 0.016138143040507036 0.020058190511464617"/>
+    <mass value="0.04244091097100989"/>
+    <inertia ixx="1.2e-05" ixy="-0.0" ixz="0.0" iyy="7e-06" iyz="-0.0" izz="1e-05"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0.093 0.085423 -0.060914"/>
+    <geometry>
+      <mesh filename="package://stubby_description/meshes/Component1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0.093 0.085423 -0.060914"/>
+    <geometry>
+      <mesh filename="package://stubby_description/meshes/Component1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
 
 <joint name="Rev1" type="continuous">
-  <origin rpy="0 0 0" xyz="0.0 0.0 0.0391"/>
+  <origin rpy="0 0 0" xyz="-0.007 0.0289 0.04"/>
   <parent link="Component1_1"/>
   <child link="Component2_1"/>
   <axis xyz="-0.0 -0.0 1.0"/>
@@ -211,10 +205,16 @@
   <axis xyz="1.0 -0.0 0.0"/>
 </joint>
 
-<joint name="Rigid7" type="fixed">
+<joint name="Rigid8" type="fixed">
   <origin rpy="0 0 0" xyz="-0.1 -0.066523 0.050914"/>
   <parent link="base_link"/>
-  <child link="base1_1"/>
+  <child link="base1__1"/>
+</joint>
+
+<joint name="Rigid9" type="fixed">
+  <origin rpy="0 0 0" xyz="0.007 -0.0189 0.01"/>
+  <parent link="base1__1"/>
+  <child link="Component1_1"/>
 </joint>
 
 </robot>
