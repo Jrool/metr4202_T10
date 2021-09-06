@@ -449,6 +449,12 @@ gtest_main_LIB_DEPENDS:STATIC=general;gtest;
 //The directory containing a CMake configuration file for rospy.
 rospy_DIR:PATH=/opt/ros/noetic/share/rospy/cmake
 
+//Value Computed by CMake
+stubby_description_BINARY_DIR:STATIC=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/stubby_description
+
+//Value Computed by CMake
+stubby_description_SOURCE_DIR:STATIC=/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/src/stubby_description
+
 
 ########################
 # INTERNAL cache entries
@@ -597,7 +603,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=7
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=8
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

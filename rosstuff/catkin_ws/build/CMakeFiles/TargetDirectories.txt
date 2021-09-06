@@ -57,3 +57,10 @@
 /home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/arm_assembly_1_description/CMakeFiles/rebuild_cache.dir
 /home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/arm_assembly_1_description/CMakeFiles/edit_cache.dir
 /home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/arm_assembly_1_description/CMakeFiles/test.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/stubby_description/CMakeFiles/install/strip.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/stubby_description/CMakeFiles/install/local.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/stubby_description/CMakeFiles/install.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/stubby_description/CMakeFiles/list_install_components.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/stubby_description/CMakeFiles/rebuild_cache.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/stubby_description/CMakeFiles/edit_cache.dir
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/stubby_description/CMakeFiles/test.dir

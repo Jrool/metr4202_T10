@@ -134,6 +134,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/arm_1_description/cmake_install.cmake")
   include("/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/arm_1v2_description/cmake_install.cmake")
   include("/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/arm_assembly_1_description/cmake_install.cmake")
+  include("/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/build/stubby_description/cmake_install.cmake")
 
 endif()
 
