@@ -1,4 +1,4 @@
-stubby_controller:
+stubby:
   # Publish all joint states -----------------------------------
   joint_state_controller:
     type: joint_state_controller/JointStateController
@@ -8,12 +8,12 @@ stubby_controller:
   Rev1_position_controller:
     type: effort_controllers/JointPositionController
     joint: Rev1
-    pid: {p: 100.0, i: 0.01, d: 10.0}
+    pid: {p: 100, i: 0.01, d: 0.01}
   Rev2_position_controller:
     type: effort_controllers/JointPositionController
     joint: Rev2
-    pid: {p: 100.0, i: 0.01, d: 10.0}
+    pid: {p: 100, i: 0.01, d: 0.01}
   Rev3_position_controller:
     type: effort_controllers/JointPositionController
     joint: Rev3
-    pid: {p: 100.0, i: 0.01, d: 10.0}
+    pid: {p: 100, i: 0.01, d: 0.01}
