@@ -1,1 +1,1 @@
-/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/devel/.private/catkin_tools_prebuild/setup.bash
+C:/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/devel/.private/catkin_tools_prebuild/setup.bash
