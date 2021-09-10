@@ -4,6 +4,8 @@
 <xacro:include filename="$(find stubby_v2_description)/urdf/materials.xacro" />
 <xacro:include filename="$(find stubby_v2_description)/urdf/stubby_v2.trans" />
 <xacro:include filename="$(find stubby_v2_description)/urdf/stubby_v2.gazebo" />
+<link name="world">
+</link>
 <link name="base_link">
   <inertial>
     <origin rpy="0 0 0" xyz="-0.09272820367532823 -0.07797949900652808 0.05592873074646475"/>
@@ -277,6 +279,16 @@
   </collision>
 </link>
 
+<gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>/stubby_v2</robotNamespace>
+    </plugin>
+</gazebo>
+
+<joint name="worldLink" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+</joint>
 <joint name="Rev1" type="continuous">
   <origin rpy="0 0 0" xyz="0.0 0.0 0.037"/>
   <parent link="Component1_1"/>

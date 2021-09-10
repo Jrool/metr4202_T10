@@ -1,1 +1,1 @@
-C:/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/devel/.private/catkin_tools_prebuild/setup.zsh
+/home/fred-ross/Documents/METR4202/Repo/rosstuff/catkin_ws/devel/.private/catkin_tools_prebuild/setup.zsh
