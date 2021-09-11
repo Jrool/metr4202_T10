@@ -13,3 +13,10 @@ Team Members + Current Roles:
 -ROS Noetic install:\
 -moveit:\
     Install on Ubuntu 20.04: `sudo apt install ros-noetic-moveit`
+
+#RECENT UPDATES:
+Changed name of main branch to master\
+`git branch -m main master`\
+`git fetch origin`\
+`git branch -u origin/master master`\
+`git remote set-head origin -a`
