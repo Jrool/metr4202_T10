@@ -1,0 +1,6 @@
+*.lmaoBad
+
+rosstuff/catkin_ws/build
+rosstuff/catkin_ws/devel
+
+.vscode
