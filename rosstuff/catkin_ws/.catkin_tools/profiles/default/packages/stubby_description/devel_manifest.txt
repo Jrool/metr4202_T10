@@ -1,0 +1,5 @@
+stubby_description
+/home/adman00199/metr4202_T10/rosstuff/catkin_ws/devel/.private/stubby_description/cmake.lock /home/adman00199/metr4202_T10/rosstuff/catkin_ws/devel/./cmake.lock
+/home/adman00199/metr4202_T10/rosstuff/catkin_ws/devel/.private/stubby_description/share/stubby_description/cmake/stubby_descriptionConfig-version.cmake /home/adman00199/metr4202_T10/rosstuff/catkin_ws/devel/share/stubby_description/cmake/stubby_descriptionConfig-version.cmake
+/home/adman00199/metr4202_T10/rosstuff/catkin_ws/devel/.private/stubby_description/share/stubby_description/cmake/stubby_descriptionConfig.cmake /home/adman00199/metr4202_T10/rosstuff/catkin_ws/devel/share/stubby_description/cmake/stubby_descriptionConfig.cmake
+/home/adman00199/metr4202_T10/rosstuff/catkin_ws/devel/.private/stubby_description/lib/pkgconfig/stubby_description.pc /home/adman00199/metr4202_T10/rosstuff/catkin_ws/devel/lib/pkgconfig/stubby_description.pc

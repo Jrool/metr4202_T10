@@ -1,0 +1,8 @@
+prefix=/home/adman00199/metr4202_T10/rosstuff/catkin_ws/install
+
+Name: stubby_controller
+Description: Description of stubby_controller
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

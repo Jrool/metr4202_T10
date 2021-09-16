@@ -1,0 +1,8 @@
+prefix=/home/adman00199/metr4202_T10/rosstuff/catkin_ws/devel/.private/stubby_v2_description
+
+Name: stubby_v2_description
+Description: Description of stubby_v2_description
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

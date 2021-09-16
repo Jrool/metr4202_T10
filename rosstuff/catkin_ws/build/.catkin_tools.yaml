@@ -1,0 +1,6 @@
+devel_space: /home/adman00199/metr4202_T10/rosstuff/catkin_ws/devel
+install: false
+install_space: /home/adman00199/metr4202_T10/rosstuff/catkin_ws/install
+profile: default
+source_space: /home/adman00199/metr4202_T10/rosstuff/catkin_ws/src
+workspace: /home/adman00199/metr4202_T10/rosstuff/catkin_ws

@@ -1,0 +1,1 @@
+/home/adman00199/metr4202_T10/rosstuff/catkin_ws/devel/.private/stubby_v2_description/share/stubby_v2_description/cmake/stubby_v2_descriptionConfig-version.cmake

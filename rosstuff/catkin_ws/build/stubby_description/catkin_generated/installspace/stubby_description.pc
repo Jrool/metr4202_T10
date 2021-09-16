@@ -1,0 +1,8 @@
+prefix=/home/adman00199/metr4202_T10/rosstuff/catkin_ws/install
+
+Name: stubby_description
+Description: Description of stubby_description
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

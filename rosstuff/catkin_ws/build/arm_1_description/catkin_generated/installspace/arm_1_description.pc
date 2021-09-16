@@ -1,0 +1,8 @@
+prefix=/home/adman00199/metr4202_T10/rosstuff/catkin_ws/install
+
+Name: arm_1_description
+Description: Description of arm_1_description
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
