@@ -2,5 +2,5 @@
 
 rosstuff/catkin_ws/build
 rosstuff/catkin_ws/devel
-
+rosstuff/catkin_ws/logs
 .vscode

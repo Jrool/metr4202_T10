@@ -1,0 +1,5 @@
+old_descriptions/arm_1_description
+/home/metr4202/Documents/team_repo/metr4202_T10/rosstuff/catkin_ws/devel/.private/arm_1_description/cmake.lock /home/metr4202/Documents/team_repo/metr4202_T10/rosstuff/catkin_ws/devel/./cmake.lock
+/home/metr4202/Documents/team_repo/metr4202_T10/rosstuff/catkin_ws/devel/.private/arm_1_description/lib/pkgconfig/arm_1_description.pc /home/metr4202/Documents/team_repo/metr4202_T10/rosstuff/catkin_ws/devel/lib/pkgconfig/arm_1_description.pc
+/home/metr4202/Documents/team_repo/metr4202_T10/rosstuff/catkin_ws/devel/.private/arm_1_description/share/arm_1_description/cmake/arm_1_descriptionConfig-version.cmake /home/metr4202/Documents/team_repo/metr4202_T10/rosstuff/catkin_ws/devel/share/arm_1_description/cmake/arm_1_descriptionConfig-version.cmake
+/home/metr4202/Documents/team_repo/metr4202_T10/rosstuff/catkin_ws/devel/.private/arm_1_description/share/arm_1_description/cmake/arm_1_descriptionConfig.cmake /home/metr4202/Documents/team_repo/metr4202_T10/rosstuff/catkin_ws/devel/share/arm_1_description/cmake/arm_1_descriptionConfig.cmake
