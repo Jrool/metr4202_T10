@@ -1,0 +1,3 @@
+[submodule "rosstuff/catkin_ws/src/dynamixel_interface"]
+	path = rosstuff/catkin_ws/src/dynamixel_interface
+	url = https://github.com/csiro-robotics/dynamixel_interface.git
