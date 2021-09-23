@@ -8,17 +8,17 @@ import numpy as np
 from std_msgs.msg import Float64
 
 def reset_angles():
-    ang1 = rospy.Publisher("stubby_v2/Rev1_position_controller/command",Float64, queue_size = 1)
-    ang2 = rospy.Publisher("stubby_v2/Rev2_position_controller/command",Float64, queue_size = 1)
-    ang3 = rospy.Publisher("stubby_v2/Rev3_position_controller/command",Float64, queue_size = 1)
+    ang1 = rospy.Publisher("stubby_complete/yaw_position_controller/command",Float64, queue_size = 1)
+    ang2 = rospy.Publisher("stubby_complete/Rev1_position_controller/command",Float64, queue_size = 1)
+    ang3 = rospy.Publisher("stubby_complete/Rev2_position_controller/command",Float64, queue_size = 1)
     ang1.publish(0)
     ang2.publish(0)
     ang3.publish(0)
 
 def test_angles():
-    ang1 = rospy.Publisher("stubby_v2/Rev1_position_controller/command",Float64, queue_size = 1)
-    ang2 = rospy.Publisher("stubby_v2/Rev2_position_controller/command",Float64, queue_size = 1)
-    ang3 = rospy.Publisher("stubby_v2/Rev3_position_controller/command",Float64, queue_size = 1)
+    ang1 = rospy.Publisher("stubby_complete/yaw_position_controller/command",Float64, queue_size = 1)
+    ang2 = rospy.Publisher("stubby_complete/Rev1_position_controller/command",Float64, queue_size = 1)
+    ang3 = rospy.Publisher("stubby_complete/Rev2_position_controller/command",Float64, queue_size = 1)
     
     rate = rospy.Rate(10)
     angle1 = 0
