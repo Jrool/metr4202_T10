@@ -12,17 +12,6 @@
   </actuator>
 </transmission>
 
-<transmission name="platformAngle_tran">
-  <type>transmission_interface/SimpleTransmission</type>
-  <joint name="platformAngle">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-  <actuator name="platformAngle_actr">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-</transmission>
-
 <transmission name="Rev1_tran">
   <type>transmission_interface/SimpleTransmission</type>
   <joint name="Rev1">
@@ -51,28 +40,6 @@
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
   </joint>
   <actuator name="gripAngle_actr">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-</transmission>
-
-<transmission name="Jaw1_tran">
-  <type>transmission_interface/SimpleTransmission</type>
-  <joint name="Jaw1">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-  <actuator name="Jaw1_actr">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    <mechanicalReduction>1</mechanicalReduction>
-  </actuator>
-</transmission>
-
-<transmission name="Jaw2_tran">
-  <type>transmission_interface/SimpleTransmission</type>
-  <joint name="Jaw2">
-    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-  </joint>
-  <actuator name="Jaw2_actr">
     <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
