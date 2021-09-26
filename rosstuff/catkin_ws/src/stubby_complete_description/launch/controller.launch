@@ -1,0 +1,9 @@
+<launch>
+
+<rosparam file="$(find stubby_complete_description)/launch/controller.yaml" command="load"/>
+<node args="yaw_position_controller Rev1_position_controller Rev2_position_controller gripAngle_position_controller joint_state_controller " name="controller_spawner" ns="stubby_complete" output="screen" pkg="controller_manager" respawn="false" type="spawner"/>
+<node name="robot_state_publisher" output="screen" pkg="robot_state_publisher" respawn="false" type="robot_state_publisher">
+  <remap from="/joint_states" to="/stubby_complete/joint_states"/>
+</node>
+
+</launch>
