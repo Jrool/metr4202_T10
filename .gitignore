@@ -3,5 +3,5 @@
 rosstuff/catkin_ws/build
 rosstuff/catkin_ws/devel
 rosstuff/catkin_ws/logs
-rosstuff/catkin_ws/.catkin_tools
+rosstuff/catkin_ws/.catkin_tools/*
 .vscode
