@@ -1,0 +1,11 @@
+controller_list:
+  - name: fake_stubby_gripper_controller
+    type: $(arg execution_type)
+    joints:
+      - yaw
+      - Rev1
+      - Rev2
+      - gripAngle
+initial:  # Define initial robot poses.
+  - group: stubby_gripper
+    pose: home
