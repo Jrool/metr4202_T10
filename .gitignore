@@ -3,5 +3,11 @@
 rosstuff/catkin_ws/build
 rosstuff/catkin_ws/devel
 rosstuff/catkin_ws/logs
-rosstuff/catkin_ws/.catkin_tools/*
+rosstuff/catkin_ws/.catkin_tools
+rosstuff/catkin_ws/src/moveit
+rosstuff/catkin_ws/src/moveit_msgs
+rosstuff/catkin_ws/src/moveit_resources
+rosstuff/catkin_ws/src/moveit_visual_tools
+rosstuff/catkin_ws/src/panda_moveit_config
+rosstuff/catkin_ws/src/rviz_visual_tools
 .vscode
