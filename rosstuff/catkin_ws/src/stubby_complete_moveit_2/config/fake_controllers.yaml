@@ -1,0 +1,15 @@
+controller_list:
+  - name: fake_stubby_arm_controller
+    type: $(arg execution_type)
+    joints:
+      - yaw
+      - Rev1
+      - Rev2
+      - gripAngle
+  - name: fake_hand_controller
+    type: $(arg execution_type)
+    joints:
+      []
+initial:  # Define initial robot poses.
+  - group: stubby_arm
+    pose: home

@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: stubby_complete_description
+    relative_path: urdf/stubby_complete.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/stubby_complete.srdf
+  CONFIG:
+    author_name: Josh
+    author_email: josh201181@gmail.com
+    generated_timestamp: 1632967069
