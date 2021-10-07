@@ -7,3 +7,6 @@
 [submodule "rosstuff/catkin_ws/src/moveit"]
 	path = rosstuff/catkin_ws/src/moveit
 	url = https://github.com/ros-planning/moveit.git
+[submodule "rosstuff/ws_moveit/src/moveit_tutorials/moveit_tutorials"]
+	path = rosstuff/ws_moveit/src/moveit_tutorials/moveit_tutorials
+	url = https://github.com/ros-planning/moveit_tutorials.git
