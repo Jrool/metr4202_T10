@@ -12,6 +12,7 @@ class Listener():
         self.angle1 = angle1
         self.angle2 = angle2
         self.angle3 = angle3
+        self.data = None
     def angles_callback(self,data):
         position = data.position
         self.yaw = position [3]
