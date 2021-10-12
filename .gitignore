@@ -4,5 +4,5 @@ rosstuff/catkin_ws/build
 rosstuff/catkin_ws/devel
 rosstuff/catkin_ws/logs
 rosstuff/catkin_ws/.catkin_tools
-rosstuff/ws_moveit
+rosstuff/ws_moveit/src
 .vscode
