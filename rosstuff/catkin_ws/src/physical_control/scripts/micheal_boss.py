@@ -7,6 +7,14 @@ import modern_robotics as mr
 from sensor_msgs.msg import JointState
 from fiducial_msgs.msg import FiducialTransformArray
 from fiducial_msgs.msg import FiducialTransform
+from std_msgs.msg import Header
+from geometry_msgs.msg import TransformStamped
+import helper_functions as hf
+import tf_broadcast as broadcast
+import tf_conversions
+import tf2_ros as tf2
+import tf
+
 #SETUP
 class Listener():
     def __init__(self, yaw,angle1,angle2,angle3):
@@ -14,43 +22,46 @@ class Listener():
         self.angle1 = angle1
         self.angle2 = angle2
         self.angle3 = angle3
-        self.translationParameters = [0,0,0]
-        self.rotationParameters = [0,0,0,0]
+        self.transforms = None
     def angles_callback(self,data):
         position = data.position
         self.yaw = position [3]
         self.angle1 = position[2]
         self.angle2 = position[1]
         self.angle3 = position[0]
+    
     def yaw_callback(self, data):
         self.yaw = data.process_value
         return
+    
     def angle1_callback(self,data):
         self.angle1 = data.process_value
+    
     def angle2_callback(self,data):
         self.angle2 = data.process_value
+    
     def angle3_callback(self,data):
         self.angle3 = data.process_value
-    def micheal_callback(self, data):
+    
+    def fiducial_callback(self, data):
         if(len(data.transforms) == 0):
             return
-        #self.translationParameters = [data.transforms[0].transform.translation.x, data.transforms[0].transform.translation.y, data.transforms[0].transform.translation.z]
-        #self.rotationParameters = [data.transforms[0].transform.rotation.x,data.transforms[0].transform.rotation.y,data.transforms[0].transform.rotation.y,data.transforms[0].transform.rotation.z]
-
-    def get_translation(self):
-        return self.translationParameters
-    def get_rotation(self):
-        return self.rotationParameters
+        self.transforms = data.transforms
+    def get_transforms(self):
+        return self.transforms
+    
     def get_yaw(self):
         return self.yaw
+    
     def get_angle1(self):
         return self.angle1
+    
     def get_angle2(self):
         return self.angle2
+    
     def get_angle3(self):
         return self.angle3
     
-
 class robotConfig():
     def __init__(self, slist, M,topicNames,msgs):
         self.slist = slist
@@ -86,6 +97,9 @@ class robotConfig():
             self.theta2,
             self.theta3])
         return self.thetalist
+
+
+
 def setup():
     S0 = [0,0,1,0,0,0]
     S1 = [1,0,0,0,19,-14.5]
@@ -123,7 +137,7 @@ class RobotControl():
         print("reset configuration")
         joints  = JointState()
         joints.name = ["yaw", "Rev1", "Rev2", "gripAngle"]
-        joints.position = [0 + 6.15* np.pi/180, 1.57, -1.57, -1.57]
+        joints.position = [0 + 6.15* np.pi/180, 2.615, -2.564, -0.7626]
         joints.velocity = [1,1,1,1]
         self.pub.publish(joints)
     def set_angles(self, thetalist):
@@ -207,38 +221,7 @@ class RobotControl():
         thetalist = [yaw, theta_1, theta_2, theta_3]
         self.set_angles(thetalist)
         #Use this as an initial guess for newton rapssona
-        """
-        eomg  = 0.5
-        ev = 10
-        phi_z = np.arctan2(-x,y)
-        print(phi_z)
-        phi_x = -np.pi #Initial guess for the phi_x, will adjust if cant find sol
-        while ( phi_x < -np.pi/2):
-            z_rot = mr.VecTose3(np.array([0,0,1,0,0,0]))
-            x_rot = mr.VecTose3(np.array([1,0,0,0,0,0]))
-            R = mr.MatrixExp6(z_rot * phi_z) * mr.MatrixExp6(x_rot * phi_x)
-            T= np.array([
-                [R[0][0], R[0][1], R[0][2], x],
-                [R[1][0], R[1][1], R[1][2], y],
-                [R[2][0], R[2][1], R[2][2], z],
-                [0,0,0,1]
-                ])
-            result = mr.IKinSpace(robot.slist, robot.M, T, 
-                    np.array(thetalist), eomg, ev)
-            print(result)
-            if(result[1] == False):
-                print(T)
-                self.set_angles(result[0])
-                break
-                phi_x += increment * 5
-                continue
-            else:
-                self.set_angles(result[0])
-                break
-        if result[1] == False:
-            print("Error: Newton Raphson could not find a solution\n")
-        print(result[0])
-        """
+        
         return True
 
     def set_configuration(self, robot,desiredConfig):
@@ -246,14 +229,162 @@ class RobotControl():
         to Reach there in 1 second, uses Newon Rhapson"""
         pass
 
+def setup_transforms(listener):
+    """Gets the transformations matrix of the camera wrt space fra,e"""
+    totalFinds = 0
+    x = 0
+    y = 0
+    z = 0
+    rx = 0
+    ry = 0
+    rz = 0
+    w  = 0
+
+    while not rospy.is_shutdown():
+        if (listener.get_transforms()) is not None:
+            #print(listener.get_transforms())
+            transforms = listener.get_transforms()
+            for item in transforms:
+                if (item.fiducial_id == 5): #TODO: find the total id5s to acc
+                                            #for dupes
+                    print("Found {} times".format(totalFinds))
+                    x += item.transform.translation.x
+                    y += item.transform.translation.y
+                    z += item.transform.translation.z
+                    rx += item.transform.rotation.x
+                    ry += item.transform.rotation.y
+                    rz += item.transform.rotation.z
+                    w += item.transform.rotation.w
+                    totalFinds +=1
+        if(totalFinds == 100):
+            x = x/totalFinds
+            y = y/totalFinds
+            z = z/totalFinds #z considering the additional z offset
+            rx = rx/totalFinds
+            ry = ry/totalFinds
+            rz = rz/totalFinds
+            w = w/totalFinds
+            break
+        rate.sleep()
+    hf.euler_from_quaternion(rx, ry, rz, w)
+    print("{} {} {}".format(x,y,z))
+    #Recall that a rotation matrix can be computed as RzRyRx
+    rot_xmat = mr.VecToso3(np.array([1,0,0]) * rx)
+    rot_ymat = mr.VecToso3(np.array([0,1,0]) * ry)
+    rot_zmat = mr.VecToso3(np.array([0,0,1]) * rz)
+    R = mr.MatrixExp3(rot_zmat) * mr.MatrixExp3(rot_ymat) * mr.MatrixExp3(rot_xmat)
+    print(R)
+    Tc1 = np.array([
+            [R[0][0], R[0][1], R[0][2], -x * pow(10,3)],
+            [R[1][0], R[1][1], R[1][2], -y * pow(10,3)],
+            [R[2][0], R[2][1], R[2][2], -z * pow(10,3)],
+            [0,0,0 ,1]
+            ])
+    Ts1 = np.array([
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0.1 * pow(10,3)],
+            [0,0,0 ,1]
+            ]) 
+
+    print(Ts1)
+    print(Tc1)
+    Tsc = Ts1 @ np.linalg.inv(Tc1)
+    print(Tsc)
+    return Tsc
+
+
+
+def camera_frame_setup(listener,tfBuffer):
+    """From the camera frame, the frame from space to camera can be
+    found
+    Inputs:
+        -listener <Listener>: Class that is used in broadcasting"""
+    while not rospy.is_shutdown():
+
+        if(listener.get_transforms() is not None):
+            transforms = listener.get_transforms()
+            for item in transforms:
+                print("here")
+                if (item.fiducial_id == 42):
+                    print("ID5 found")
+                    x = input("Continue (C) or retry(R)?")
+                    if(x == "R"):
+                        continue
+                    elif(x == "C"):
+                        pass
+                    else: 
+                        print("Invalid Option")
+                        continue
+
+                    broadcast.send_transform(item, "fixed_id5", "camera_1",True)
+                    
+                    while not rospy.is_shutdown():
+                        try:
+                            Tsc = tfBuffer.lookup_transform("camera_1", "space_frame",rospy.Time())
+                            broadcast.send_transform(Tsc, "space_frame", "camera",True)
+                            return
+                        except (tf2.LookupException, tf2.ConnectivityException, tf2.ExtrapolationException) as e:
+                            print(e)
+                            continue
+                    return
+            print("iterating")
+
+def update_transform(newTransform : FiducialTransform, parentFrame):
+    """Updates the frame transform with respect to the parent frame
+    establishes it as the name given in the fiducial id
+    INPUTS: 
+        -newTransform: <FiducialTransform>: The transform to be published
+        -parentFrame: <str> The frame to define it in terms of (Typically camera)
+    """
+    br = tf2.TransformBroadcaster()
+    t = TransformStamped()
+    t.header.stamp = rospy.Time.now()
+    t.header.frame_id = "camera"
+    t.child_frame_id = str(newTransform.fiducial_id)
+    t.transform.translation.x = newTransform.transform.translation.x
+    t.transform.translation.y = newTransform.transform.translation.y
+    t.transform.translation.z = newTransform.transform.translation.z
+
+    t.transform.rotation.x = newTransform.transform.rotation.x
+    t.transform.rotation.y = newTransform.transform.rotation.y
+    t.transform.rotation.z = newTransform.transform.rotation.z
+    t.transform.rotation.w = newTransform.transform.rotation.w
+
+    br.sendTransform(t)
+
+
+
+
+def handle_boxes(listener : Listener,robot : robotConfig, RC: RobotControl):
+    """In the event that there are more than one boxes detected in the 
+    workspace, the robot will find the x, y,z and compute the angles to
+    pick it up
+    INPUTS:
+        -listener: The listener class
+        -robot: robot class
+        -robotControl: robot  controller class"""
+    validTransforms = []
+    while not rospy.is_shutdown():
+        for marker in listener.get_transforms():
+            if marker.fiducial_id == 42:
+                continue
+            else:
+                update_transform(marker,"camera")
+
+                
+
+
 #########################MAIN############################
 if __name__ == "__main__":
     np.set_printoptions(precision = True,suppress = True)
     SETUP_FLAG = 0
+    
     try:
         rospy.init_node("dynamic_control", anonymous=True)
         rate = rospy.Rate(10)
-        
+        tfBuffer = tf2.Buffer()
+        tfListener = tf2.TransformListener(tfBuffer)
         armPublisher = rospy.Publisher(
                 "/desired_joint_states",
                 JointState,
@@ -263,39 +394,32 @@ if __name__ == "__main__":
         topic = "/joint_states"
         rospy.Subscriber(topic, JointState,
                 listener.angles_callback)
-        rospy.Subscriber("/fiducial_transforms", FiducialTransformArray, listener.micheal_callback)
+        rospy.Subscriber("/fiducial_transforms", FiducialTransformArray,
+                listener.fiducial_callback)
+        
+
+
+        #################BEGIN PROGRAM####################
         print("Initial Setup delay")
         rospy.sleep(4)
         stumpy = setup()
         RC.reset_configuration()
         rospy.sleep(2)
         startTime = rospy.get_rostime().secs
+        #setup_transforms(listener)
+        #print("Base Frame setup Complete")
+        #base_frame_setup()
+        camera_frame_setup(listener, tfBuffer)
         while not rospy.is_shutdown():
             stumpy.get_angles(listener)
+            
             T = mr.FKinSpace(stumpy.M,stumpy.slist,stumpy.thetalist)
             print("Current Position:\n {}".format(T))
-            #Demo Desired positiona
-            currentTime = rospy.get_rostime().secs - startTime
-            print(currentTime)
-            """ NEWTON RAPSON
-            Td = np.array([
-                [0.8,0.1,-0.6,0],
-                [0.6,0.1,0.8,100],
-                [0, -1, 0.1, 0],
-                [0,0,0,1]])
-            eomg = 0.01
-            ev = 0.01
-            thetalist0 = stumpy.get_angles(listener)
-            reqTheta = mr.IKinSpace(stumpy.slist, stumpy.M, Td, thetalist0,eomg,ev)
-            print(reqTheta)
-            RC.set_angles(reqTheta[0])
-            """
-            print(listener.get_translation, listener.get_rotation)
-            x = float(input("Enter x:\n"))
-            y = float(input("Enter y:\n"))
-            z = float(input("Enter z:\n"))
-            target = [x,y,z]
-            RC.set_coordinates(target, stumpy)
+            #In the event that the arm detects more than one target, it needs to handle
+            # all of these markers
+            if (len(listener.get_transforms()) > 2):
+                handle_boxes(listener) 
+            #RC.set_coordinates(target, stumpy)
             rospy.sleep(5)
             rate.sleep()
     except rospy.ROSInterruptException:

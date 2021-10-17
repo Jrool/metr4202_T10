@@ -1,0 +1,18 @@
+<launch>
+
+    <include file="$(find dynamixel_interface)/launch/dynamixel_interface_controller.launch"/>
+    <include file="$(find ximea_ros_cam)/launch/example_cam.launch"/>
+    <include file="$(find aruco_detect)/launch/aruco_detect.launch">
+        <arg name="fiducial_len" value="0.022"/>
+        <arg name="dictionary" value="1"/>
+    </include>
+    <arg default="$(find stubby_complete_description)/urdf/stubby_complete.xacro" name="model"/>
+    <arg default="$(find stubby_complete_description)/launch/urdf.rviz" name="rvizconfig"/>
+    <param command="$(find xacro)/xacro $(arg model)" name="robot_description"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    <node name="tf_broadcaster" pkg="physical_control" type="tf_broadcast.py"/>
+    
+    <node pkg="tf2_ros" type="static_transform_publisher" name="space_frame" args = "0 0 0.034 0 0 0 Component2_1 space_frame"/>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="fixed_id5" args = "-0.015 0 0 0 0 0 Component9_1 fixed_id5"/>
+
+</launch>
