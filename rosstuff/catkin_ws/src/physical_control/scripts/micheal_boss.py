@@ -7,7 +7,7 @@ import modern_robotics as mr
 from sensor_msgs.msg import JointState
 from fiducial_msgs.msg import FiducialTransformArray
 from fiducial_msgs.msg import FiducialTransform
-from std_msgs.msg import Header
+from std_msgs.msg import Header, Float32
 from geometry_msgs.msg import TransformStamped
 import helper_functions as hf
 import tf_broadcast as broadcast
@@ -145,7 +145,7 @@ class RobotControl():
         joints  = JointState()
         joints.name = ["yaw", "Rev1", "Rev2", "gripAngle"]
         joints.position = thetalist
-        joints.position[0] = thetalist[0] + 6.15 *np.pi/180
+        joints.position[0] = thetalist[0] #+ 6.15 *np.pi/180
         joints.velocity = [1,1,1,1]
         self.pub.publish(joints)
 
@@ -373,7 +373,8 @@ def handle_boxes(listener : Listener,robot : robotConfig, RC: RobotControl, tfBu
         -listener: The listener class
         -robot: robot class
         -robotControl: robot  controller class"""
-    print("here")
+    servo = rospy.Publisher("/servo_state", Float32, queue_size=1)
+    
     validTransforms = []
     for marker in listener.get_transforms():
         if marker.fiducial_id == 42:
@@ -383,14 +384,30 @@ def handle_boxes(listener : Listener,robot : robotConfig, RC: RobotControl, tfBu
         tries = 0
         while (tries < 5) and (not rospy.is_shutdown()):
             try:
-                Tsb = tfBuffer.lookup_transform("space_frame","fiducial_" + str(box), rospy.Time())
-                x = Tsb.transform.translation.x * pow(10,3)
-                y = Tsb.transform.translation.y * pow(10,3)
-                z = Tsb.transform.translation.z * pow(10,3)
+                servo.publish(1)
+                for i in range(0,5):
+                    Tsb = tfBuffer.lookup_transform("space_frame","fiducial_" + str(box), rospy.Time())
+                    x = (Tsb.transform.translation.x ) * pow(10,3)
+                    y = (Tsb.transform.translation.y + 0.015) * pow(10,3)
+                    z = Tsb.transform.translation.z * pow(10,3)
+                theta = np.arctan(x/y)
+                #No y offset at x
+                x_off = -15#mm
+                x += x_off
+                
                 coords = [x,y,40]
                 print(coords)
-                rospy.sleep(5)
+                
                 RC.set_coordinates(coords,robot)
+                rospy.sleep(5)
+                coords = [x,y,0]
+                RC.set_coordinates(coords,robot)
+                
+                rospy.sleep(2.5)
+                servo.publish(0)
+                RC.reset_configuration()
+                rospy.sleep(5)
+                servo.publish(1)
                 break
             
             except (tf2.LookupException, tf2.ConnectivityException, tf2.ExtrapolationException):
@@ -409,7 +426,8 @@ if __name__ == "__main__":
     
     try:
         rospy.init_node("dynamic_control", anonymous=True)
-        rate = rospy.Rate(10)
+        rate = rospy.Rate(50)
+
         tfBuffer = tf2.Buffer()
         tfListener = tf2.TransformListener(tfBuffer)
         armPublisher = rospy.Publisher(
