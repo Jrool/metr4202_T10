@@ -191,7 +191,7 @@ class RobotControl():
             x2 = x - x_offset
             z2 = z - L3 * np.sin(phi_3) - z_offset
             y2 = y - L3 * np.cos(phi_3) - y_offset
-            print("phi_3: {}\nZ2: {} Y2: {}".format(phi_3,z2, y2))
+            #print("phi_3: {}\nZ2: {} Y2: {}".format(phi_3,z2, y2))
             if (np.sqrt(z2**2 + y2**2) > (z2 + y2)):
                 phi_3+= increment
                 print("Outside Workspace grip = {}".format(phi_3))
@@ -295,6 +295,32 @@ def setup_transforms(listener):
 
 
 
+
+def update_transform(newTransform : FiducialTransform, parentFrame, childname = None):
+    """Updates the frame transform with respect to the parent frame
+    establishes it as the name given in the fiducial id
+    INPUTS: 
+        -newTransform: <FiducialTransform>: The transform to be published
+        -parentFrame: <str> The frame to define it in terms of (Typically camera)
+    """
+    br = tf2.TransformBroadcaster()
+    t = TransformStamped()
+    t.header.stamp = rospy.Time.now()
+    t.header.frame_id = "camera"
+    if(childname == None):
+        t.child_frame_id = str(newTransform.fiducial_id)
+    else:
+        t.child_frame_id = str(childname)
+    t.transform.translation.x = newTransform.transform.translation.x
+    t.transform.translation.y = newTransform.transform.translation.y
+    t.transform.translation.z = newTransform.transform.translation.z
+
+    t.transform.rotation.x = newTransform.transform.rotation.x
+    t.transform.rotation.y = newTransform.transform.rotation.y
+    t.transform.rotation.z = newTransform.transform.rotation.z
+    t.transform.rotation.w = newTransform.transform.rotation.w
+    br.sendTransform(t)
+
 def camera_frame_setup(listener,tfBuffer):
     """From the camera frame, the frame from space to camera can be
     found
@@ -307,8 +333,10 @@ def camera_frame_setup(listener,tfBuffer):
             for item in transforms:
                 print("here")
                 if (item.fiducial_id == 42):
+                    
                     print("ID5 found")
-                    x = input("Continue (C) or retry(R)?")
+                    x = input("Continue (C) or retry(R)?\n")
+                    
                     if(x == "R"):
                         continue
                     elif(x == "C"):
@@ -317,46 +345,27 @@ def camera_frame_setup(listener,tfBuffer):
                         print("Invalid Option")
                         continue
 
-                    broadcast.send_transform(item, "fixed_id5", "camera_1",True)
-                    
+                    #for i in range(0,5):
+                    #update_transform(item,"fixed_id5", childname="camera")
+                    #broadcast.send_transform(item ,"fixed_id5","camera_1", True)
+                    update_transform(item,"fixed_id5", childname="camera")              
                     while not rospy.is_shutdown():
                         try:
-                            Tsc = tfBuffer.lookup_transform("camera_1", "space_frame",rospy.Time())
-                            broadcast.send_transform(Tsc, "space_frame", "camera",True)
+                            #Tsc = tfBuffer.lookup_transform("camera_1", "space_frame", rospy.Time(),timeout = rospy.Duration(4.0) )
+                            #broadcast.send_transform(Tsc, "space_frame", "camera",True)
+                            Tsc = tfBuffer.lookup_transform("camera", "space_frame", rospy.Time(),timeout = rospy.Duration(4.0) )
                             return
                         except (tf2.LookupException, tf2.ConnectivityException, tf2.ExtrapolationException) as e:
+                            update_transform(item,"fixed_id5", childname="camera")
+                    
                             print(e)
                             continue
                     return
             print("iterating")
 
-def update_transform(newTransform : FiducialTransform, parentFrame):
-    """Updates the frame transform with respect to the parent frame
-    establishes it as the name given in the fiducial id
-    INPUTS: 
-        -newTransform: <FiducialTransform>: The transform to be published
-        -parentFrame: <str> The frame to define it in terms of (Typically camera)
-    """
-    br = tf2.TransformBroadcaster()
-    t = TransformStamped()
-    t.header.stamp = rospy.Time.now()
-    t.header.frame_id = "camera"
-    t.child_frame_id = str(newTransform.fiducial_id)
-    t.transform.translation.x = newTransform.transform.translation.x
-    t.transform.translation.y = newTransform.transform.translation.y
-    t.transform.translation.z = newTransform.transform.translation.z
-
-    t.transform.rotation.x = newTransform.transform.rotation.x
-    t.transform.rotation.y = newTransform.transform.rotation.y
-    t.transform.rotation.z = newTransform.transform.rotation.z
-    t.transform.rotation.w = newTransform.transform.rotation.w
-
-    br.sendTransform(t)
 
 
-
-
-def handle_boxes(listener : Listener,robot : robotConfig, RC: RobotControl):
+def handle_boxes(listener : Listener,robot : robotConfig, RC: RobotControl, tfBuffer: tf2.Buffer):
     """In the event that there are more than one boxes detected in the 
     workspace, the robot will find the x, y,z and compute the angles to
     pick it up
@@ -364,13 +373,31 @@ def handle_boxes(listener : Listener,robot : robotConfig, RC: RobotControl):
         -listener: The listener class
         -robot: robot class
         -robotControl: robot  controller class"""
+    print("here")
     validTransforms = []
-    while not rospy.is_shutdown():
-        for marker in listener.get_transforms():
-            if marker.fiducial_id == 42:
-                continue
-            else:
-                update_transform(marker,"camera")
+    for marker in listener.get_transforms():
+        if marker.fiducial_id == 42:
+            continue
+        validTransforms.append(marker.fiducial_id)
+    for box in validTransforms:
+        tries = 0
+        while (tries < 5) and (not rospy.is_shutdown()):
+            try:
+                Tsb = tfBuffer.lookup_transform("space_frame","fiducial_" + str(box), rospy.Time())
+                x = Tsb.transform.translation.x * pow(10,3)
+                y = Tsb.transform.translation.y * pow(10,3)
+                z = Tsb.transform.translation.z * pow(10,3)
+                coords = [x,y,40]
+                print(coords)
+                rospy.sleep(5)
+                RC.set_coordinates(coords,robot)
+                break
+            
+            except (tf2.LookupException, tf2.ConnectivityException, tf2.ExtrapolationException):
+                tries+=1
+                if tries == 5:
+                    break
+
 
                 
 
@@ -406,10 +433,7 @@ if __name__ == "__main__":
         RC.reset_configuration()
         rospy.sleep(2)
         startTime = rospy.get_rostime().secs
-        #setup_transforms(listener)
-        #print("Base Frame setup Complete")
-        #base_frame_setup()
-        camera_frame_setup(listener, tfBuffer)
+        x  = input("Press any key to continue")
         while not rospy.is_shutdown():
             stumpy.get_angles(listener)
             
@@ -417,10 +441,12 @@ if __name__ == "__main__":
             print("Current Position:\n {}".format(T))
             #In the event that the arm detects more than one target, it needs to handle
             # all of these markers
-            if (len(listener.get_transforms()) > 2):
-                handle_boxes(listener) 
+            if (len(listener.get_transforms()) >= 1):
+                handle_boxes(listener,stumpy, RC, tfBuffer) 
+        
+            
             #RC.set_coordinates(target, stumpy)
-            rospy.sleep(5)
+            print("detected {} markers".format(len(listener.get_transforms())))
             rate.sleep()
     except rospy.ROSInterruptException:
         pass
