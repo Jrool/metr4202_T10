@@ -132,12 +132,13 @@ class RobotControl():
     def __init__(self, pub):
         self.pub = pub
 
-    def reset_configuration(self):
+    def reset_configuration(self, servo):
         """Resets the robot condition to a defined zero condition"""
         print("reset configuration")
+        servo.publish(3)
         joints  = JointState()
         joints.name = ["yaw", "Rev1", "Rev2", "gripAngle"]
-        joints.position = [0 + 6.15* np.pi/180, 2.615, -2.564, -0.7626]
+        joints.position = [0 + 6.15* np.pi/180, 2.224, -2.186, -1.92]
         joints.velocity = [1,1,1,1]
         self.pub.publish(joints)
     def set_angles(self, thetalist):
@@ -388,26 +389,32 @@ def handle_boxes(listener : Listener,robot : robotConfig, RC: RobotControl, tfBu
                 for i in range(0,5):
                     Tsb = tfBuffer.lookup_transform("space_frame","fiducial_" + str(box), rospy.Time())
                     x = (Tsb.transform.translation.x ) * pow(10,3)
-                    y = (Tsb.transform.translation.y + 0.015) * pow(10,3)
+                    y = (Tsb.transform.translation.y) * pow(10,3)
                     z = Tsb.transform.translation.z * pow(10,3)
                 theta = np.arctan(x/y)
                 #No y offset at x
-                x_off = -15#mm
+                x_off = 15#mm
                 x += x_off
-                
+                y_off = 5
+                y += y_off
                 coords = [x,y,40]
                 print(coords)
                 
                 RC.set_coordinates(coords,robot)
-                rospy.sleep(5)
+                rospy.sleep(2.5)
                 coords = [x,y,0]
                 RC.set_coordinates(coords,robot)
                 
                 rospy.sleep(2.5)
                 servo.publish(0)
-                RC.reset_configuration()
-                rospy.sleep(5)
+                rospy.sleep(2.5)
+                coords = [x,y,40]
+                RC.set_coordinates(coords,robot)
+                rospy.sleep(1)
+                RC.set_angles([-1.57,1.57,-1.57,-1.57])
+                rospy.sleep(2.5)
                 servo.publish(1)
+                RC.reset_configuration(servo)
                 break
             
             except (tf2.LookupException, tf2.ConnectivityException, tf2.ExtrapolationException):
@@ -441,14 +448,14 @@ if __name__ == "__main__":
                 listener.angles_callback)
         rospy.Subscriber("/fiducial_transforms", FiducialTransformArray,
                 listener.fiducial_callback)
-        
+        servo = rospy.Publisher("/servo_state", Float32, queue_size=1)
 
 
         #################BEGIN PROGRAM####################
         print("Initial Setup delay")
         rospy.sleep(4)
         stumpy = setup()
-        RC.reset_configuration()
+        RC.reset_configuration(servo)
         rospy.sleep(2)
         startTime = rospy.get_rostime().secs
         x  = input("Press any key to continue")
