@@ -383,15 +383,40 @@ def handle_boxes(listener : Listener,robot : robotConfig, RC: RobotControl, tfBu
         validTransforms.append(marker.fiducial_id)
     for box in validTransforms:
         tries = 0
+        #let [0,0,0] be invalid transforms
         while (tries < 5) and (not rospy.is_shutdown()):
             try:
-                servo.publish(1)
+                x_found = 0
+                y_found = 0
+                z_found =0
                 for i in range(0,5):
                     Tsb = tfBuffer.lookup_transform("space_frame","fiducial_" + str(box), rospy.Time())
                     x = (Tsb.transform.translation.x ) * pow(10,3)
                     y = (Tsb.transform.translation.y) * pow(10,3)
                     z = Tsb.transform.translation.z * pow(10,3)
+                    print("Found: {} {} {}".format(x,y,z))
+                    if(x == x_found) and (y == y_found) and (z == z_found):
+                        continue
+                servo.publish(1)
+                
                 theta = np.arctan(x/y)
+                
+                parent = "space_frane"
+
+                child =  "fiducial_" + str(box)
+                
+                br = tf2.TransformBroadcaster()
+                trans = TransformStamped()
+                trans.header.frame_id = parent
+                trans.child_frame_id = child
+                trans.transform.translation.x = x_found 
+                trans.transform.translation.y = y_found
+                trans.transform.translation.z = z_found
+                trans.transform.rotation.x =  Tsb.transform.rotation.x
+                trans.transform.rotation.y = Tsb.transform.rotation.y
+                trans.transform.rotation.z = Tsb.transform.rotation.z
+                trans.transform.rotation.w   = Tsb.transform.rotation.z
+                br.sendTransform(trans)
                 #No y offset at x
                 x_off = 15#mm
                 x += x_off

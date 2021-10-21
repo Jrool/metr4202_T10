@@ -77,6 +77,7 @@ class Listener():
                     return
                 staticBcaster.sendTransform(t)
                 self.set_static = 1
+                exit(0)
 
     def get_transforms(self):
         """returns the transform"""
@@ -84,6 +85,7 @@ class Listener():
 
 def tf_callback(data):
     br = tf.TransformBroadcaster()
+   
     if(len(data.transforms) == 0):
         return
     else:
@@ -97,6 +99,8 @@ def tf_callback(data):
                 (trans.rotation.x, trans.rotation.y, trans.rotation.z, trans.rotation.w),
                 rospy.Time.now(),
                  child, parent)
+            
+
 
 def aurco_frame(x,y,z,rx,ry,rz):
     """Develops an aruco tag transformation frame with respect to the joint
@@ -158,25 +162,21 @@ def send_transform(item, parent, child, static=False):
         -item:<FiducialTransform> type recieved from camera"""
     if static:
         br = tf2.StaticTransformBroadcaster()
-        trans = TransformStamped()
-        print(item)
-        trans.header.frame_id = parent
-        trans.child_frame_id = child
-        trans.transform.translation.x = item.transform.translation.x 
-        trans.transform.translation.y = item.transform.translation.y
-        trans.transform.translation.z = item.transform.translation.z
-        trans.transform.rotation.x =  item.transform.rotation.x
-        trans.transform.rotation.y = item.transform.rotation.y
-        trans.transform.rotation.z = item.transform.rotation.z
-        trans.transform.rotation.w = item.transform.rotation.z
-        br.sendTransform(trans)
-    
     else:
         br = tf2.TransformBroadcaster()
-        br.sendTransform((item.transform.translation.x, item.transform.translation.y, item.transform.translation.z),
-                    (item.transform.rotation.x,item.transform.rotation.y, item.transform.rotation.z,item.transform.rotation.w),
-                    rospy.Time.now(), child, parent)
-    
+    trans = TransformStamped()
+    print(item)
+    trans.header.frame_id = parent
+    trans.child_frame_id = child
+    trans.transform.translation.x = item.transform.translation.x 
+    trans.transform.translation.y = item.transform.translation.y
+    trans.transform.translation.z = item.transform.translation.z
+    trans.transform.rotation.x =  item.transform.rotation.x
+    trans.transform.rotation.y = item.transform.rotation.y
+    trans.transform.rotation.z = item.transform.rotation.z
+    trans.transform.rotation.w = item.transform.rotation.z
+    br.sendTransform(trans)
+
 # def base_frame_setup(listener):
 #     """From the camera frame, the frame from space to camera can be
 #     found"""
@@ -193,12 +193,13 @@ if __name__ == "__main__":
     rospy.Subscriber("/fiducial_transforms", FiducialTransformArray,
             listener.camera_callback)
     #base_frame_setup(listener)
-
+    rate = rospy.Rate(50)
     while not rospy.is_shutdown():
         try:
             # aurco_frame(-1.5 * pow(10,-2), 0, 0, 0, 0, 0)
             #base_frame(0, 0, 3.4 * pow(10,2), 0, 0, 0)
             rospy.Subscriber("/tf", TFMessage, tf_callback)
             rospy.spin()
+            
         except rospy.ROSInterruptException:
             pass
