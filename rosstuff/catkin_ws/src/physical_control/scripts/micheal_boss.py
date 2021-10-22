@@ -138,7 +138,7 @@ class RobotControl():
         servo.publish(3)
         joints  = JointState()
         joints.name = ["yaw", "Rev1", "Rev2", "gripAngle"]
-        joints.position = [0 + 6.15* np.pi/180, 2.224, -2.186, -1.92]
+        joints.position = [0 + 6.15* np.pi/180, 2.1138, -2.037, -2.1]
         joints.velocity = [1,1,1,1]
         self.pub.publish(joints)
     def set_angles(self, thetalist):
@@ -293,7 +293,10 @@ def setup_transforms(listener):
     Tsc = Ts1 @ np.linalg.inv(Tc1)
     print(Tsc)
     return Tsc
-
+br = tf2.TransformBroadcaster()
+                # trans = TransformStamped()
+                # trans.header.frame_id = parent
+                # trans.child_frame_id = child
 
 
 
@@ -365,6 +368,29 @@ def camera_frame_setup(listener,tfBuffer):
             print("iterating")
 
 
+def check_box_orientation(x, y, currentAng):
+    #set approapriate angle ranges
+    flag = False
+    if currentAng<0:
+        currentAng  = currentAng+2*np.pi
+    if x<0:
+        desiredAng = (np.pi/2 - np.abs(np.arctan(y/x)))
+    else:
+        desiredAng = -1*(np.pi/2 - np.abs(np.arctan(y/x)))
+    print(x,y)
+    print("Desired Angle", desiredAng)
+    fR = 2*np.pi
+    possibleAng = [(desiredAng+0)%fR, (desiredAng+np.pi/2)%fR, (desiredAng+np.pi)%fR, (desiredAng+(3*np.pi/2))%fR]
+    print("possible Angles:", possibleAng)
+    for i in possibleAng:
+        print(currentAng)
+        if ((i+0.3) > currentAng and currentAng > (i-0.3)):
+            flag = True
+            break
+        else:
+            flag = False 
+    return flag
+
 
 def handle_boxes(listener : Listener,robot : robotConfig, RC: RobotControl, tfBuffer: tf2.Buffer):
     """In the event that there are more than one boxes detected in the 
@@ -380,72 +406,92 @@ def handle_boxes(listener : Listener,robot : robotConfig, RC: RobotControl, tfBu
     for marker in listener.get_transforms():
         if marker.fiducial_id == 42:
             continue
+        # tempx = marker.transforms.transform.rotation.x
+        # tempy = box.transforms.transform.rotation.y
+        # tempz = box.transforms.transform.rotation.z
+        # tempw = box.transforms.transform.rotation.w
         validTransforms.append(marker.fiducial_id)
     for box in validTransforms:
         tries = 0
         #let [0,0,0] be invalid transforms
-        while (tries < 5) and (not rospy.is_shutdown()):
-            try:
-                x_found = 0
-                y_found = 0
-                z_found =0
-                for i in range(0,5):
-                    Tsb = tfBuffer.lookup_transform("space_frame","fiducial_" + str(box), rospy.Time())
-                    x = (Tsb.transform.translation.x ) * pow(10,3)
-                    y = (Tsb.transform.translation.y) * pow(10,3)
-                    z = Tsb.transform.translation.z * pow(10,3)
-                    print("Found: {} {} {}".format(x,y,z))
-                    if(x == x_found) and (y == y_found) and (z == z_found):
-                        continue
-                servo.publish(1)
+        #while (tries < 5) and (not rospy.is_shutdown()):
+        try:
+            x_found = 0
+            y_found = 0
+            z_found =0
+            for i in range(0,5):
+                Tsb = tfBuffer.lookup_transform("space_frame","fiducial_" + str(box), rospy.Time())
+                x = (Tsb.transform.translation.x ) * pow(10,3)
+                y = (Tsb.transform.translation.y) * pow(10,3)
+                z = Tsb.transform.translation.z * pow(10,3)
                 
-                theta = np.arctan(x/y)
-                
-                parent = "space_frane"
-
-                child =  "fiducial_" + str(box)
-                
-                br = tf2.TransformBroadcaster()
-                trans = TransformStamped()
-                trans.header.frame_id = parent
-                trans.child_frame_id = child
-                trans.transform.translation.x = x_found 
-                trans.transform.translation.y = y_found
-                trans.transform.translation.z = z_found
-                trans.transform.rotation.x =  Tsb.transform.rotation.x
-                trans.transform.rotation.y = Tsb.transform.rotation.y
-                trans.transform.rotation.z = Tsb.transform.rotation.z
-                trans.transform.rotation.w   = Tsb.transform.rotation.z
-                br.sendTransform(trans)
-                #No y offset at x
-                x_off = 15#mm
-                x += x_off
-                y_off = 5
-                y += y_off
-                coords = [x,y,40]
-                print(coords)
-                
-                RC.set_coordinates(coords,robot)
-                rospy.sleep(2.5)
-                coords = [x,y,0]
-                RC.set_coordinates(coords,robot)
-                
-                rospy.sleep(2.5)
-                servo.publish(0)
-                rospy.sleep(2.5)
-                coords = [x,y,40]
-                RC.set_coordinates(coords,robot)
-                rospy.sleep(1)
-                RC.set_angles([-1.57,1.57,-1.57,-1.57])
-                rospy.sleep(2.5)
-                servo.publish(1)
-                RC.reset_configuration(servo)
-                break
+            servo.publish(1)
             
-            except (tf2.LookupException, tf2.ConnectivityException, tf2.ExtrapolationException):
-                tries+=1
-                if tries == 5:
-                    break
+            theta = np.arctan(x/y)
+            
+            parent = "space_frane"
+
+            child =  "fiducial_" + str(box)
+            
+            # br = tf2.TransformBroadcaster()
+            # trans = TransformStamped()
+            # trans.header.frame_id = parent
+            # trans.child_frame_id = child
+            #get the quaternion for the detected aruco marker
+            tempx = Tsb.transform.rotation.x
+            tempy = Tsb.transform.rotation.y
+            tempz = Tsb.transform.rotation.z
+            tempw = Tsb.transform.rotation.w
+            nu = hf.euler_from_quaternion(tempx,tempy,tempz,tempw)[2]
+            
+
+            # #create the transform matrix for detected aruco marker
+            # trans.transform.translation.x = x_found 
+            # trans.transform.translation.y = y_found
+            # trans.transform.translation.z = z_found
+            # trans.transform.rotation.x =  Tsb.transform.rotation.x 
+            # trans.transform.rotation.y = Tsb.transform.rotation.y
+            # trans.transform.rotation.z = Tsb.transform.rotation.z
+            # trans.transform.rotation.w = Tsb.transform.rotation.z
+            
+            #br.sendTransform(trans)
+            #No y offset at x
+            x_off = 15#mm
+            y_off = 5
+            x += x_off
+            
+            y += y_off
+            coords = [x,y,40]
+            print(coords)
+
+            
+        
+            print(check_box_orientation(x+30,y,nu))
+            if check_box_orientation(x+30,y,nu) == 0:
+                continue
+            
+            if (RC.set_coordinates(coords,robot) == False):
+                continue
+            rospy.sleep(2.5)
+            coords = [x,y,0]
+            RC.set_coordinates(coords,robot)
+            
+            rospy.sleep(2.5)
+            servo.publish(0)
+            rospy.sleep(2.5)
+            coords = [x,y,40]
+            RC.set_coordinates(coords,robot)
+            rospy.sleep(1)
+            RC.set_angles([-1.57,1.57,-1.57,-1.57])
+            rospy.sleep(2.5)
+            servo.publish(1)
+            RC.reset_configuration(servo)
+            break
+        
+        except (tf2.LookupException, tf2.ConnectivityException, tf2.ExtrapolationException):
+            tries+=1
+            if tries == 5:
+                break
 
 
                 
