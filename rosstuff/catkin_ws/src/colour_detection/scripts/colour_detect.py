@@ -112,9 +112,9 @@ def demo(rgb_data):
     It is suggested to use a subscriber/publisher node to listen for Images, and publish the color detected.
     """
     # Read the colors.config file from each line and set the color arrays
-    current_dir = os.getcwd()
+    current_dir = r"/home/metr4202/Documents/team_repo/metr4202_T10/rosstuff/catkin_ws/src/colour_detection/scripts"
     try:
-        file = open(current_dir + "/colors.config", 'r')
+        file = open(current_dir + r"/colors.config", 'r')
         i = 0
         for line in file:
             entries = line.split(' ')
@@ -274,6 +274,7 @@ class Coords():
         print("done")
         print(self._red, self._blue, self._green, self._yellow)
         self._msg.data = [0,argmax([self._red, self._green,self._blue, self._yellow])]
+        print("I sent this")
         self._colour_pub.publish(self._msg)
         self._red = 0
         self._green = 0
@@ -285,7 +286,7 @@ class Coords():
 
 if __name__ == "__main__":
     DataToSend = Coords()
-    rospy.init_node("colourfull", anonymous=True)
+    rospy.init_node("colourful", anonymous=True)
     rospy.Subscriber("/ximea_cam/image_raw", Image, DataToSend.image_callback, queue_size=1)
     rospy.Subscriber("/colour_data", Int16MultiArray, DataToSend.colour_data , queue_size=1)
     rospy.spin()

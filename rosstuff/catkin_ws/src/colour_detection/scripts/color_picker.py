@@ -143,8 +143,8 @@ while True:
     if save:
         try:
             # Write to the file colors.config
-            current_dir = os.getcwd()
-            file = open(current_dir + "/colors.config", 'w+')
+            current_dir = r"/home/metr4202/Documents/team_repo/metr4202_T10/rosstuff/catkin_ws/src/colour_detection/scripts"
+            file = open(current_dir + r"/colors.config", 'w+')
             file.write("{} {} {}\n".format(bgr_red[0], bgr_red[1], bgr_red[2]))
             file.write("{} {} {}\n".format(bgr_green[0], bgr_green[1], bgr_green[2]))
             file.write("{} {} {}\n".format(bgr_blue[0], bgr_blue[1], bgr_blue[2]))
