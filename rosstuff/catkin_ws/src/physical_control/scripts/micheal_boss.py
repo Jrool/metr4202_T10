@@ -286,7 +286,7 @@ class RobotControl():
         thetalist = [1.1464919, 1.57, 1.16223, 1.556]
         self.set_angles(thetalist)
         rospy.sleep(2)
-        thetalist = [1.1464919, 2.1725, 1.16223, 1.556]
+        thetalist = [1.2693, 2.22, 1.14137, 1.161]
         self.set_angles(thetalist)
         rospy.sleep(2)
         servo.publish(1)
