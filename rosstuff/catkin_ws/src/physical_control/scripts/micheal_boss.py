@@ -15,7 +15,7 @@ import helper_functions as hf
 import tf_broadcast as broadcast
 import tf_conversions
 import tf2_ros as tf2
-import tf
+import tf.transformations 
 
 #SETUP
 
@@ -82,6 +82,7 @@ class robotConfig():
         self.theta1 = 0
         self.theta2 = 0
         self.theta3 = 0
+        self.fiducial_blacklist = [42]
 
     def check_setup(self):
         length = len(self.slist)
@@ -143,13 +144,14 @@ class RobotControl():
     def reset_configuration(self, servo):
         """Resets the robot condition to a defined zero condition"""
         print("reset configuration")
-        servo.publish(3)
+        
         joints  = JointState()
         joints.name = ["yaw", "Rev1", "Rev2", "gripAngle"]
         joints.position = [0 + 6.15* np.pi/180, 1.57, -2.037, -2.1]
         joints.velocity = [1,1,1,1]
         self.pub.publish(joints)
         rospy.sleep(1)
+        servo.publish(3)
         joints.position = [0 + 6.15* np.pi/180, 2.1138, -2.037, -2.1]
         self.pub.publish(joints)
     def set_angles(self, thetalist):
@@ -157,7 +159,7 @@ class RobotControl():
         joints  = JointState()
         joints.name = ["yaw", "Rev1", "Rev2", "gripAngle"]
         joints.position = thetalist
-        joints.position[0] = thetalist[0] + 6.15 *np.pi/180
+        joints.position[0] = thetalist[0] #+ 6.15 *np.pi/180
         joints.velocity = [1,1,1,1]
         self.pub.publish(joints)
         
@@ -242,47 +244,55 @@ class RobotControl():
         to Reach there in 1 second, uses Newon Rhapson"""
         pass
 
-    def set_yellow_zone(self, servo: rospy.Publisher):
+    def set_red_zone(self, servo: rospy.Publisher):
         """Places the robot in the yellow zone for effective placement", drops the angle
         afterwards to place the block down"""
-        thetalist = [-0.977, 2.1855,1.06223,1.57]
+        thetalist = [1.96,1.213,-1.453,-1.0595]
 
         self.set_angles(thetalist)
         rospy.sleep(4)
         servo.publish(1)
-
-    def set_red_zone(self, servo : rospy.Publisher):
+        rospy.sleep(1)
+    def set_yellow_zone(self, servo : rospy.Publisher):
         #thetalist = [-0.1945, 2.2725, 0.96223, 1.556]
-        thetalist = [-0.1945, 1.57, 1.06223, 1.556]
+        thetalist = [-0.21, 1.57, 1.16223, 1.556]
         self.set_angles(thetalist)
         rospy.sleep(2)
-        thetalist = [-0.1945, 2, 1.06223, 1.556]
+        thetalist = [-0.21, 2, 1.16223, 1.556]
         self.set_angles(thetalist)
         rospy.sleep(2)
         servo.publish(1)
-        thetalist = [-0.1945, 1.57, 0.96223, 1.556]
+        thetalist = [-0.21, 1.57, 0.96223, 1.556]
         self.set_angles(thetalist)
         rospy.sleep(2)
 
     def set_green_zone(self, servo: rospy.Publisher):
-        thetalist = [0.31733, 1.57, 1.06223, 1.556]
+        thetalist = [0.31733, 1.57, 1.16223, 1.556]
         self.set_angles(thetalist)
         rospy.sleep(2)
-        thetalist = [0.31733, 2.2, 1.06223, 1.556]
+        thetalist = [0.31733, 2.2, 1.16223, 1.556]
         self.set_angles(thetalist)
         rospy.sleep(2)
+        
+        thetalist = [0.38387, 2.1957, 1.3307, 1.136]
+        self.set_angles(thetalist)
         servo.publish(1)
-        thetalist = [0.31733, 1.57, 1.06223, 1.556]
+        rospy.sleep(1)
+        thetalist = [0.31733, 1.57, 1.16223, 1.556]
         self.set_angles(thetalist)
         rospy.sleep(1)
     
     def set_blue_zone(self, servo:rospy.Publisher):
-        thetalist = [1.1464919, 2.2725, 1.06223, 1.556]
+        thetalist = [1.1464919, 1.57, 1.16223, 1.556]
         self.set_angles(thetalist)
-        rospy.sleep(5)
+        rospy.sleep(2)
+        thetalist = [1.1464919, 2.1725, 1.16223, 1.556]
+        self.set_angles(thetalist)
+        rospy.sleep(2)
         servo.publish(1)
+        rospy.sleep(1)
     def make_veritcal(self, servo: rospy.Publisher):
-        thetalist = [0, 1.57, 0, 0.7370305345665205]
+        thetalist = [0.10734, 1.57, 0, 0.7370305345665205]
         self.set_angles(thetalist)
         rospy.sleep(5)
 
@@ -390,34 +400,41 @@ def handle_boxes(listener : Listener,robot : robotConfig, RC: RobotControl, tfBu
     servo = rospy.Publisher("/servo_state", Float32, queue_size=1)
     
     validTransforms = []
+    moving = 0
+    checked = 0
+    print("Detected {} Markers".format(len(listener.transforms)))
     for marker in listener.get_transforms():
-        moving = 0
-        checked = 0
-        if marker.fiducial_id == 42:
+        
+        if marker.fiducial_id in robot.fiducial_blacklist:
             continue
         # tempx = marker.transforms.transform.rotation.x
         # tempy = box.transforms.transform.rotation.y
         # tempz = box.transforms.transform.rotation.z
         # tempw = box.transforms.transform.rotation.w
         lastOmega = None
-        angle = 15 * np.pi/180
-        for i in range(0,3):
+        angle = 10 * np.pi/180
+        for i in range(0,4):
             if moving:
                 return
             elif checked:
                 break
             T = tfBuffer.lookup_transform("space_frame","fiducial_" + str(marker.fiducial_id), rospy.Time())
+            #(trans, rot) = tfBuffer.lookup_transform("space_frame","fiducial_" + str(marker.fiducial_id), rospy.Time())
+            thetas = hf.euler_from_quaternion(T.transform.rotation.x, T.transform.rotation.y, T.transform.rotation.z, T.transform.rotation.w)
+            print("Thetaz: {}".format(thetas[2]))
+            thetaZ = thetas[2]
             if (lastOmega is not None):
-                if(T.transform.rotation.w > lastOmega + angle) or (T.transform.rotation.w < lastOmega - angle):
+                if(thetaZ> lastOmega + angle) or (thetaZ < lastOmega - angle):
                     #It is moving
                     moving = 1
-            print("Omega: {}".format(T.transform.rotation.w))
-            lastOmega = T.transform.rotation.w
+           
+            lastOmega = thetas[2]
             rospy.sleep(0.5)
         print("Moving: {}".format(moving))
         checked = 1
         if (T.transform.translation.y < 0):
             print("y negative ({})".format(T.transform.translation.y))
+            robot.fiducial_blacklist.append(marker.fiducial_id)
             continue
         print("Appending {}".format(marker.fiducial_id))
         validTransforms.append(marker.fiducial_id)
@@ -459,12 +476,12 @@ def handle_boxes(listener : Listener,robot : robotConfig, RC: RobotControl, tfBu
             
 
            
-            x_off = 5#mm
-            y_off = 5
+            x_off = 7.5#mm
+            y_off = 2.5
             x += x_off
             
             y += y_off
-            coords = [x,y,60]
+            coords = [x,y,80]
             print(coords)
 
             
@@ -487,10 +504,11 @@ def handle_boxes(listener : Listener,robot : robotConfig, RC: RobotControl, tfBu
             RC.set_coordinates(coords,robot)
             rospy.sleep(1)
             RC.make_veritcal(servo)
+            rospy.sleep(4)
             colourSend = Int16MultiArray()
             colourSend.data = [1,0]
             colourPub.publish(colourSend)
-            rospy.sleep(10)
+            rospy.sleep(3)
             #while ((listener.colour_array is None) or (listener.colour_array.data[0] == 1) and not rospy.is_shutdown()):
                 #rospy.sleep(1)
             print("COLOUR: {}".format(listener.colour_array.data[1]))
@@ -567,6 +585,7 @@ if __name__ == "__main__":
             
             #RC.set_coordinates(target, stumpy)
             print("detected {} markers".format(len(listener.get_transforms())))
+            print("blacklist {}".format(stumpy.fiducial_blacklist))
             rate.sleep()
     except rospy.ROSInterruptException:
         pass
